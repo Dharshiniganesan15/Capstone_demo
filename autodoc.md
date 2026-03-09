@@ -4,7 +4,7 @@ This document provides a comprehensive overview of the codebase, adhering strict
 
 ## Overview
 
-This codebase consists of a single HTML file that implements a simple web-based Task Manager application. It's a self-contained front-end application with its HTML structure, CSS styling, and JavaScript logic all embedded within `task_manager.html`. Users can add new tasks, mark existing tasks as complete, and delete tasks.
+This codebase consists of a single HTML file, `task_manager.html`, which implements a client-side "Advanced Task Manager". It utilizes embedded HTML for structure, CSS for styling, and JavaScript for dynamic functionality. The application allows users to add, edit, delete, and mark tasks as complete, with task data persisting in the browser's local storage.
 
 ## File Structure
 
@@ -12,74 +12,118 @@ This codebase consists of a single HTML file that implements a simple web-based 
 
 ## File: task_manager.html
 
-This file serves as the complete application. It contains the following components:
+This file contains the entire application, comprising the HTML structure, embedded CSS styles within a `<style>` tag in the `<head>`, and embedded JavaScript functionality within a `<script>` tag at the end of the `<body>`.
 
--   **HTML Structure**: Defines the layout and elements of the task manager interface.
--   **CSS Styling**: Embedded within a `<style>` tag in the `<head>`, providing visual presentation and responsiveness.
--   **JavaScript Functionality**: Embedded within a `<script>` tag in the `<body>`, implementing the interactive logic for task management.
+The HTML defines the basic page structure, a main container, an input area for new tasks, and an unordered list (`<ul>`) to display tasks.
+The CSS provides styling for layout, typography, and visual appearance of the task manager components, including specific styles for buttons and completed tasks.
+The JavaScript manages the task data, interacts with local storage for persistence, and dynamically renders the tasks on the page, handling user interactions like adding, editing, deleting, and marking tasks as complete.
 
 ## HTML Structure
 
-The `task_manager.html` file defines a standard HTML5 document.
+The `task_manager.html` file defines the following key elements and their structure:
 
--   The `<!DOCTYPE html>` declaration and `<html>` root element with `lang="en"`.
--   The `<head>` section includes:
-    -   `meta` tag for `charset="UTF-8"`.
-    -   `<title>` set to "Simple Task Manager".
-    -   An embedded `<style>` block containing all the CSS rules for the page.
--   The `<body>` section contains the main content:
-    -   A `div` with the class `container` which acts as the main wrapper for the task manager interface.
-    -   An `<h2>` heading displaying "Task Manager".
-    -   A `div` with the class `input-area` containing:
-        -   An `input` field of type `text` with `id="taskInput"` and a `placeholder="Enter new task"`.
-        -   A `button` labeled "Add" which, when clicked, executes the `addTask()` JavaScript function.
-    -   An unordered list (`<ul>`) with `id="taskList"`, which will dynamically hold the added tasks.
-    -   An embedded `<script>` block containing all the JavaScript logic for the application.
+-   **Document Type and Language**: HTML5 doctype and `lang="en"` for English.
+-   **Head Section**:
+    -   `meta charset="UTF-8"`: Specifies character encoding.
+    -   `title`: "Advanced Task Manager" sets the page title.
+    -   `style` tag: Contains all CSS rules for the application's appearance.
+-   **Body Section**:
+    -   `div class="container"`: The main wrapper for the task manager interface.
+        -   `h2`: Displays "Task Manager" as the application title.
+        -   `div class="input-area"`: Contains elements for adding new tasks.
+            -   `input type="text" id="taskInput"`: An input field for entering task text, with a placeholder "Enter task".
+            -   `button class="add" onclick="addTask()"`: An "Add" button that triggers the `addTask()` JavaScript function when clicked.
+        -   `ul id="taskList"`: An unordered list where tasks will be dynamically rendered by JavaScript.
+    -   `script` tag: Contains all JavaScript code for the application's functionality.
 
 ## CSS Styling
 
-The embedded CSS styles define the visual appearance of the Task Manager.
+The embedded CSS styles define the visual presentation of the task manager:
 
--   **`body`**: Sets `Arial, sans-serif` as the font, a light grey background (`#f4f6f8`), and uses flexbox (`display: flex`, `justify-content: center`, `align-items: center`, `height: 100vh`) to center the container both horizontally and vertically on the page.
--   **`.container`**: Styles the main application box with a white background, padding, a fixed width of `400px`, rounded corners (`border-radius: 10px`), and a subtle `box-shadow`.
--   **`h2`**: Centers the main heading text.
--   **`.input-area`**: Uses flexbox to arrange the input field and add button side-by-side with a `10px` gap and `15px` bottom margin.
--   **`input`**: Occupies available space within `.input-area` (`flex: 1`) and has `8px` padding.
--   **`button`**: Provides basic styling for buttons: padding, no border, blue background (`#007bff`), white text, rounded corners (`border-radius: 5px`), and a pointer cursor.
--   **`button:hover`**: Darkens the button background to `#0056b3` on hover.
--   **`ul`**: Removes default list styling (`list-style: none`) and padding.
--   **`li`**: Styles individual task items with a light grey background (`#f1f1f1`), bottom margin, padding, rounded corners, and uses flexbox (`display: flex`, `justify-content: space-between`, `align-items: center`) to align task text and delete button.
--   **`.completed`**: Applies a line-through text decoration and changes text color to `gray` for tasks marked as complete.
--   **`.delete`**: Overrides the default button background to `red` for delete buttons.
+-   **`body`**:
+    -   `font-family: Arial`: Sets a common sans-serif font.
+    -   `background:#f4f4f4`: Light gray background color.
+    -   `display:flex`, `justify-content:center`, `align-items:center`, `height:100vh`: Centers the content vertically and horizontally on the page.
+-   **`.container`**:
+    -   `background:white`, `padding:25px`, `width:420px`: White background, padding, and fixed width for the main application box.
+    -   `border-radius:10px`, `box-shadow:0 4px 10px rgba(0,0,0,0.2)`: Rounded corners and a subtle shadow for a card-like effect.
+-   **`h2`**:
+    -   `text-align:center`: Centers the "Task Manager" heading.
+-   **`.input-area`**:
+    -   `display:flex`, `gap:10px`: Arranges the input field and add button in a row with spacing.
+-   **`input`**:
+    -   `flex:1`: Allows the input field to take up available space.
+    -   `padding:8px`: Internal padding.
+-   **`button`**:
+    -   `padding:6px 10px`, `border:none`, `border-radius:4px`, `cursor:pointer`: Basic styling for all buttons, including padding, no border, rounded corners, and a pointer cursor on hover.
+-   **`.add`**:
+    -   `background:#007bff`, `color:white`: Blue background and white text for the "Add" button.
+-   **`.delete`**:
+    -   `background:red`, `color:white`: Red background and white text for "Delete" buttons.
+-   **`.edit`**:
+    -   `background:orange`, `color:white`: Orange background and white text for "Edit" buttons.
+-   **`li`**:
+    -   `display:flex`, `justify-content:space-between`, `align-items:center`: Arranges task text and action buttons in a row, with space between them and vertical alignment.
+    -   `background:#eee`, `margin-top:8px`, `padding:8px`, `border-radius:5px`: Light gray background, margin, padding, and rounded corners for individual task items.
+-   **`.completed`**:
+    -   `text-decoration:line-through`, `color:gray`: Strikes through text and changes color to gray for completed tasks.
+-   **`.actions button`**:
+    -   `margin-left:5px`: Adds left margin to action buttons (Edit, Delete) within a task item.
 
 ## JavaScript Functionality
 
-The embedded JavaScript provides the interactive logic for the task manager.
+The JavaScript code manages the task list, stores it in local storage, and dynamically updates the UI.
 
+-   **`tasks` array**:
+    -   Initializes an array `tasks` by attempting to parse a JSON string from `localStorage.getItem("tasks")`. If no data is found, it defaults to an empty array. This array holds objects, each representing a task with `text` (string) and `completed` (boolean) properties.
+-   **`saveTasks()` function**:
+    -   Serializes the `tasks` array into a JSON string using `JSON.stringify()`.
+    -   Stores this string in `localStorage` under the key `"tasks"`.
+-   **`renderTasks()` function**:
+    -   Gets a reference to the `ul` element with `id="taskList"`.
+    -   Clears its current HTML content (`list.innerHTML=""`).
+    -   Iterates through the `tasks` array:
+        -   For each `task`, it creates a new `li` element.
+        -   Creates a `span` element to display the `task.text`.
+        -   If `task.completed` is true, it adds the "completed" CSS class to the `span`.
+        -   Attaches an `onclick` event to the `span`: Toggles the `completed` status of the task, saves tasks, and re-renders the list.
+        -   Creates a `div` element with `className="actions"` to hold action buttons.
+        -   Creates an "Edit" button:
+            -   Sets its `textContent` to "Edit" and `className` to "edit".
+            -   Attaches an `onclick` event: Prompts the user for new task text, updates the task if input is provided, saves tasks, and re-renders.
+        -   Creates a "Delete" button:
+            -   Sets its `textContent` to "Delete" and `className` to "delete".
+            -   Attaches an `onclick` event: Removes the task from the `tasks` array using `splice()`, saves tasks, and re-renders.
+        -   Appends the "Edit" and "Delete" buttons to the `actions` div.
+        -   Appends the `span` and `actions` div to the `li`.
+        -   Appends the `li` to the `taskList` `ul`.
 -   **`addTask()` function**:
-    -   Retrieves the `taskInput` element and its trimmed value.
-    -   **Input Validation**: If `taskText` is empty, it displays an `alert` message "Please enter a task" and stops execution.
-    -   Creates a new `li` element to represent a task item.
-    -   Creates a `span` element to hold the task text.
-        -   Sets the `textContent` of the `span` to the `taskText`.
-        -   Assigns an `onclick` event listener to the `span` that toggles the `completed` CSS class on the `span` itself, allowing tasks to be marked as complete/incomplete.
-    -   Creates a `button` element for deleting the task.
-        -   Sets its `textContent` to "Delete" and its `className` to "delete" for specific styling.
-        -   Assigns an `onclick` event listener to this button that removes its parent `li` element from the DOM, effectively deleting the task.
-    -   Appends the `span` (task text) and the `delBtn` (delete button) as children to the `li` element.
-    -   Appends the newly created `li` element to the `ul` element with `id="taskList"`.
-    -   Clears the `value` of the `taskInput` field, preparing it for the next task entry.
+    -   Gets a reference to the `input` element with `id="taskInput"`.
+    -   Retrieves and trims its `value`.
+    -   If the `text` is empty, an `alert` is shown, and the function returns.
+    -   Pushes a new task object `{ text: text, completed: false }` to the `tasks` array.
+    -   Clears the input field (`input.value=""`).
+    -   Calls `saveTasks()` to persist the updated list.
+    -   Calls `renderTasks()` to update the UI.
+-   **Initial Call**:
+    -   `renderTasks()` is called once when the script loads to display any tasks loaded from local storage.
 
 ## Features
-- Add new tasks to a list.
-- Mark tasks as completed by clicking on the task text, which applies a strike-through and changes its color to grey.
-- Delete individual tasks using a "Delete" button next to each task.
-- Input validation to prevent adding empty tasks.
+-   **Add Task**: Users can input text into a designated field and click an "Add" button to add a new task to the list.
+-   **Display Tasks**: Tasks are displayed in an unordered list, each with its text and action buttons.
+-   **Mark Task as Complete**: Clicking on a task's text toggles its completion status, applying a strikethrough style and changing its color when completed.
+-   **Edit Task**: Each task has an "Edit" button that, when clicked, prompts the user to enter new text for the task.
+-   **Delete Task**: Each task has a "Delete" button that, when clicked, removes the task from the list.
+-   **Task Persistence**: All tasks (including their text and completion status) are saved to and loaded from the browser's local storage, so they persist across browser sessions.
 
 ## How to Use/Run
 
-1.  **Save the code**: Copy the entire code block and save it into a file named `task_manager.html` (or any other `.html` extension).
-2.  **Open in Browser**: Navigate to the saved `task_manager.html` file in your file explorer and open it with any modern web browser (e.g., Chrome, Firefox, Edge, Safari).
-3.  **Add a Task**: Type a task into the "Enter new task" input field and click the "Add" button. The task will appear in the list below.
-4.  **Mark as Complete**: Click on the text of an existing task to toggle its completed status (it will gain a strike-through and turn grey). Click again to revert.
-5.  **Delete a Task**: Click the "Delete" button next to any task to remove it from the list.
+To use or run this application:
+
+1.  Save the provided code into a file named `task_manager.html` (or any `.html` extension).
+2.  Open the `task_manager.html` file in any modern web browser (e.g., Chrome, Firefox, Safari, Edge).
+3.  The task manager interface will appear.
+4.  Enter a task in the input field and click "Add" to add it.
+5.  Click on a task's text to mark it as complete/incomplete.
+6.  Click the "Edit" button next to a task to modify its text.
+7.  Click the "Delete" button next to a task to remove it.
